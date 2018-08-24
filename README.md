@@ -1,16 +1,16 @@
 # web-test
 
-## Project setup
+## 安装依赖
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### 启动后台服务
 ```
-npm run serve
+npm run server
 ```
 
-### Compiles and minifies for production
+### 启动前台服务
 ```
-npm run build
+npm run serve
 ```
