@@ -15,7 +15,7 @@
                     <el-table-column>
                         <template slot-scope="scope">
                             <el-button size='mini' @click="editUser(scope.row)">修改</el-button>
-                            <el-button size='mini' @click="delUesr(scope.row)">删除</el-button>
+                            <el-button size='mini' @click="delUser(scope.row)">删除</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -30,7 +30,7 @@
     import userForm from "./userForm";
     import userRoleForm from "./userRoleForm";
     import userAuthForm from "./userAuthForm";
-    import { getUserList } from "@/api/user"
+    import { getUserList, deleteUser } from "@/api/user"
 
     export default {
         name: "userManage",
@@ -43,7 +43,7 @@
             return {
                 total: 0,
                 queryFilters: {},
-                tableData: []
+                tableData: [],
             };
         },
         methods: {
@@ -74,17 +74,22 @@
                     });
                 }
             },
-            delUesr: function (tag) {
-                /*删除用户*/
-                var params = tag.id;
-                this.$http.delete({
-                    name:'用户',
-                    url: '/sysUser/deleteUser',
-                    params
-                }).then(res => {
-                    this.queryInfo(this.queryFilters);
-                }).catch(error=>{
-                    console.error('ERROR', error);
+            tabelH:function(h){
+                h(()=>{
+                    return false
+                })
+            },
+            // 删除用户
+            delUser: function (item) {
+                this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    deleteUser({id: item.id}).then(res => {
+                        this.$message.success('删除成功')
+                        this.queryInfo(this.queryFilters)        
+                    })
                 })
             },
             // 新增用户

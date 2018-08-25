@@ -61,8 +61,8 @@
             saveForm() {
                 var params = this.formData
                 addUser(params).then(res => {
-                    console.log('成功');
                     this.close()
+                    this.$parent.queryInfo()
                 })
             }, 
         }

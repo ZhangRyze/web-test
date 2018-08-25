@@ -7,6 +7,7 @@
 </template>
 <script>
 import NavBarItem from './navBarItem';
+import manageRoutes from '@/router/manageRoutes';
 
 export default {
     name: 'homeHeader',
@@ -21,6 +22,7 @@ export default {
         }
     },
     created() {
+        this.menuList = manageRoutes;
     },
     methods: {
 

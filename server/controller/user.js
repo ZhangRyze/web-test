@@ -64,4 +64,18 @@ export default {
             ctx.error(e)
         }
     },
+    del: async (ctx, next) =>{
+        console.log('----------------删除用户 user/del-----------------------');
+        let { id } = ctx.request.body
+        try {
+            let data = await ctx.findById(userModel, id);
+            if (!data) {
+                ctx.error(400, "不存在该用户")
+            }
+            ctx.remove(userModel, { _id: id })
+            ctx.success()
+        } catch (e) {
+            ctx.error(e)
+        }
+    }
 }
