@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "server": "NODE_ENV=development nodemon ./server/index.js",
+    "server": "nodemon ./server/index.js",
     "predev": "npm run server",
     "dev": "npm run serve"
   },
@@ -36,6 +36,7 @@
     "koa-static": "^5.0.0",
     "log4js": "^3.0.5",
     "mongoose": "^5.2.9",
+    "nodemon": "^1.18.3",
     "vue-template-compiler": "^2.5.17"
   }
 }

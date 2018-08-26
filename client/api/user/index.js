@@ -32,7 +32,7 @@ export const getUserInfo = ({ id }) => {
 export const deleteUser = ({ id }) => {
     const data = { id }
     return axios.post({
-        url: 'user/info',
+        url: 'user/del',
         data
     })
 }

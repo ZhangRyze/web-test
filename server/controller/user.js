@@ -66,6 +66,8 @@ export default {
     },
     del: async (ctx, next) =>{
         console.log('----------------删除用户 user/del-----------------------');
+        console.log(ctx.request.body);
+        
         let { id } = ctx.request.body
         try {
             let data = await ctx.findById(userModel, id);

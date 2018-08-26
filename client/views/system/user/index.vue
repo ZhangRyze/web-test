@@ -48,6 +48,7 @@
         },
         methods: {
             queryInfo: function (params) {
+                params = params || this.queryFilters
                 getUserList(params).then(res => {
                     this.total = res.data.total
                     this.tableData = res.data.list
@@ -81,14 +82,16 @@
             },
             // 删除用户
             delUser: function (item) {
-                this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
+                var _me = this
+                _me.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    deleteUser({id: item.id}).then(res => {
-                        this.$message.success('删除成功')
-                        this.queryInfo(this.queryFilters)        
+                    deleteUser({id: item._id}).then(res => {
+                        _me.$message.success('删除成功')
+                        debugger
+                        _me.queryInfo(_me.queryFilters)        
                     })
                 })
             },

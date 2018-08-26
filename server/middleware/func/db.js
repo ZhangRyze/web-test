@@ -58,8 +58,8 @@ export const remove = (model, conditions) => {
                 console.error('Error: ' + JSON.stringify(err));
                 reject(err);
                 return false;
-            } else {
-                if (res.result.n != 0) {
+            } else {                
+                if (res.n != 0) {
                     console.log('remove success!');
                 } else {
                     console.log('remove fail:no this data!');
