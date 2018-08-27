@@ -3,38 +3,47 @@ import userModel from '../models/user'
 
 export default {
     add: async (ctx, next) =>{
-        let paramsData = ctx.request.body, { _id } = ctx.request.body;
-        if (_id){
-            console.log('----------------更新用户 user/add-----------------------');
-            try {
-                let data = await ctx.findById(userModel, _id);
-                if (!data) {
-                    ctx.error(400, "不存在该用户")
-                }
-                let _data = await ctx.update(userModel, { _id: paramsData._id }, paramsData)
-                ctx.success(_data)
-            } catch (e) {
-                ctx.error(e)
+        let paramsData = ctx.request.body;
+        console.log('----------------添加用户 user/add-----------------------');
+        try {
+            let data = await ctx.findOne(userModel, {
+                $or: [{
+                    loginName: paramsData.loginName,
+                }, {
+                    userName: paramsData.userName
+                }]
+            })
+            if (data) {
+                ctx.error(400, "存在该用户")
+            } else {
+                let { _id } = await ctx.add(userModel, paramsData);
+                ctx.success({ id: _id})
             }
-        }else{
-            console.log('----------------添加用户 user/add-----------------------');
-            try {
-                let data = await ctx.findOne(userModel, {
-                    $or: [{
-                        loginName: paramsData.loginName,
-                    }, {
-                        userName: paramsData.userName
-                    }]
-                })
-                if (data) {
-                    ctx.error(400, "存在该用户")
-                } else {
-                    let { _id } = await ctx.add(userModel, paramsData);
-                    ctx.success({ id: _id})
-                }
-            } catch (e) {
-                ctx.error(e)
+        } catch (e) {
+            ctx.error(e)
+        }
+    },
+    update: async (ctx, next) =>{
+        let paramsData = ctx.request.body;
+        console.log('----------------更新用户 user/update-----------------------');
+        try {
+            let data = await ctx.findOne(userModel, {
+                $or: [{
+                    _id: { $ne: paramsData._id },
+                    loginName: paramsData.loginName,
+                }, {
+                    _id: { $ne: paramsData._id },
+                    userName: paramsData.userName
+                }]
+            })
+            if (data){
+                ctx.error(400, "存在该用户账户或用户名称")
+            }else{
+                let data = await ctx.update(userModel, { _id: paramsData._id }, paramsData)
+                data ? ctx.success(data) : ctx.error(400, "用户不存在")
             }
+        } catch (e) {
+            ctx.error(e)
         }
     },
     list: async (ctx, next) => {
@@ -49,7 +58,6 @@ export default {
             }, { password: 0, __v: 0}, { limit: pageSize * 1, skip: (pageNo - 1) * pageSize });
             ctx.success(data)
         } catch (e) {
-            console.log(e)
             ctx.error(e)
         }
     },
@@ -58,24 +66,17 @@ export default {
         let { id } = ctx.request.body;
         try {
             let data = await ctx.findById(userModel, id, { password: 0, __v: 0 });
-            ctx.success(data)
+            data ? ctx.success(data) : ctx.error(400, "用户不存在") 
         } catch (e) {
-            console.log(e)
             ctx.error(e)
         }
     },
     del: async (ctx, next) =>{
         console.log('----------------删除用户 user/del-----------------------');
-        console.log(ctx.request.body);
-        
         let { id } = ctx.request.body
         try {
-            let data = await ctx.findById(userModel, id);
-            if (!data) {
-                ctx.error(400, "不存在该用户")
-            }
-            ctx.remove(userModel, { _id: id })
-            ctx.success()
+            let data = await ctx.remove(userModel, { _id: id })
+            data ? ctx.success(data) : ctx.error(400, "用户不存在")
         } catch (e) {
             ctx.error(e)
         }

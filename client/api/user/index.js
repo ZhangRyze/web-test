@@ -1,12 +1,18 @@
 import HttpRequest from "@/util/axios";
 const axios = new HttpRequest()
 
-export const addUser = (data) => {
-    console.log(data);
-    return axios.post({
-        url: 'user/add',
-        data
-    })
+export const handleUser = (data) => {
+    if(data._id){
+        return axios.post({
+            url: 'user/update',
+            data
+        })
+    }else{
+        return axios.post({
+            url: 'user/add',
+            data
+        })
+    }
 }
 
 export const getUserList = ({ userName, pageNo, pageSize }) => {

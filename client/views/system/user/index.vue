@@ -30,7 +30,7 @@
     import userForm from "./userForm";
     import userRoleForm from "./userRoleForm";
     import userAuthForm from "./userAuthForm";
-    import { getUserList, deleteUser } from "@/api/user"
+    import { getUserList, deleteUser, getUserInfo } from "@/api/user"
 
     export default {
         name: "userManage",
@@ -101,7 +101,9 @@
             },
             // 编辑用户信息
             editUser: function (item) {
-                this.$refs.userDialog.open(item);
+                getUserInfo({id: item._id}).then(res => {
+                    this.$refs.userDialog.open(res.data);
+                })
             },
             // 编辑用户角色
             editRole: function (item) {

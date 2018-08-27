@@ -7,7 +7,7 @@
             <el-form-item label="用户姓名">
                 <el-input v-model="formData.userName" placeholder="请输入用户姓名"></el-input>
             </el-form-item>
-            <el-form-item label="用户密码">
+            <el-form-item label="用户密码" v-if="!activeItem">
                 <el-input type="password" v-model="formData.password" placeholder="请输入用户密码"></el-input>
             </el-form-item>
             <el-form-item label="联系方式">
@@ -25,21 +25,19 @@
 </template>
 
 <script>
-    import { addUser, getUserInfo } from "@/api/user"
+    import { handleUser } from "@/api/user"
     export default {
         name: "userForm",
         data() {
             return {
                 activeItem: null,
                 dialogVisible:false,
-                dialogTitle:"提示",
+                dialogTitle:"新增用户",
                 formData: {}
             }
         },
         methods: {
             open: function (item) {
-                console.log(item);
-                
                 this.activeItem = item || null;
                 this.dialogVisible = true;
             }, 
@@ -48,19 +46,12 @@
                 this.dialogVisible = false;
             },
             dialogOpen() {
-                if (this.activeItem) {
-                    getUserInfo({id: this.activeItem._id}).then(res => {
-                        this.formData = res.data
-                    })
-                } else {
-                    // 新增初始化
-                    this.formData = {};
-                    this.dialogTitle="新增用户";
-                }
+                this.dialogTitle = this.activeItem ? "用户修改" : "新增用户" 
+                this.formData = this.activeItem ? this.activeItem : {}
             },
             saveForm() {
                 var params = this.formData
-                addUser(params).then(res => {
+                handleUser(params).then(res => {
                     this.close()
                     this.$parent.queryInfo()
                 })

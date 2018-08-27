@@ -28,13 +28,13 @@ export const add = (model, conditions) => {
  */
 export const update = (model, conditions, update, options) => {
     return new Promise((resolve, reject) => {
-        model.update(conditions, update, options, (err, res) => {
+        model.findByIdAndUpdate(conditions, update, options, (err, res) => {
             if (err) {
                 console.error('Error: ' + JSON.stringify(err));
                 reject(err);
                 return false;
             }
-            if (res.n != 0) {
+            if (res && res.n != 0) {
                 console.log('update success!');
             } else {
                 console.log('update fail:no this data!');
@@ -53,18 +53,18 @@ export const update = (model, conditions, update, options) => {
 
 export const remove = (model, conditions) => {
     return new Promise((resolve, reject) => {
-        model.remove(conditions, function (err, res) {
+        model.findByIdAndRemove(conditions, function (err, res) {
             if (err) {
                 console.error('Error: ' + JSON.stringify(err));
                 reject(err);
                 return false;
-            } else {                
-                if (res.n != 0) {
+            } else {
+                if (res && res.n != 0) {
                     console.log('remove success!');
                 } else {
                     console.log('remove fail:no this data!');
                 }
-                reject(res);
+                resolve(res);
             }
         });
     })
@@ -91,7 +91,7 @@ export const find = (model, conditions, fields, options = {}) => {
                 reject(err);
                 return false;
             } else {
-                if (res.length != 0) {
+                if (res && res.length != 0) {
                     console.log('find success!');
                 } else {
                     console.log('find fail:no this data!');
@@ -124,7 +124,7 @@ export const findById = (model, conditions, fields, options = {}) => {
                 reject(err);
                 return false;
             } else {
-                if (res.length != 0) {
+                if (res && res.length != 0) {
                     console.log('find success!');
                 } else {
                     console.log('find fail:no this data!');
