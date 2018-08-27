@@ -25,7 +25,7 @@
 </template>
 
 <script>
-    import { handleUser } from "@/api/user"
+    import { handleUser } from "@/api/system/user"
     export default {
         name: "userForm",
         data() {

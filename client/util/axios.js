@@ -22,9 +22,9 @@ class httpRequest {
     interceptors (instance, url) {
         // 请求拦截器
         instance.interceptors.request.use(config => {
-            if (!config.url.includes('user')){
-                config.headers['x-access-token'] = Cookies.get(TOKEN_KEY)
-            }
+            // if (!config.url.includes('user')){
+            //     config.headers['x-access-token'] = Cookies.get(TOKEN_KEY)
+            // }
             return config
         }, err => {
             return Promise.reject(err)

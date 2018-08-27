@@ -1,5 +1,17 @@
-import user_router from "./user"
+import koaRouter from 'koa-router'
+const router = koaRouter()
+// =========================[-user-接口模块-start]==================================================
+import user_controller from "../controller/system/user"
+for (const func in user_controller) {
+    router.post(`/user/${func}`, user_controller[func])
+}
+// =========================[-dict-接口模块-start]==================================================
+import dict_controller from "../controller/system/dict"
+for (const func in dict_controller) {
+    router.post(`/dict/${func}`, dict_controller[func])
+}
+
 
 export default app => {
-    app.use(user_router.routes(), user_router.allowedMethods());
+    app.use(router.routes(), router.allowedMethods());
 }

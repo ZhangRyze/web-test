@@ -30,7 +30,7 @@
     import userForm from "./userForm";
     import userRoleForm from "./userRoleForm";
     import userAuthForm from "./userAuthForm";
-    import { getUserList, deleteUser, getUserInfo } from "@/api/user"
+    import { getUserList, deleteUser, getUserInfo } from "@/api/system/user"
 
     export default {
         name: "userManage",

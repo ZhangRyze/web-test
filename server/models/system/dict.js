@@ -1,24 +1,22 @@
 var format = require('date-format');
-import db from '../mongodb'
+import db from '../../mongodb'
 let userSchema = db.Schema({
-    loginName: {
+    parent: {
         type: String,
-        required: true,
-        unique: true
+        default: null,
     },
-    userName: {
-        type: String,
-        required: true
-    },
-    password: {
+    code: {
         type: String,
         required: true
     },
-    contact: {
+    name: {
+        type: String,
+        required: true
+    },
+    sort_no: {
         type: Number,
+        required: true
     },
-    contact: Number,
-    remark: String,
     createTime: {
         type: String,
         default: () => {
@@ -26,6 +24,5 @@ let userSchema = db.Schema({
             return format('yyyy-MM-dd hh:mm:ss', _date)
         }
     },
-    loginTime: Date
 })
-export default db.model('user', userSchema);
+export default db.model('dictionary', userSchema);

@@ -1,5 +1,4 @@
-import conf from '../../server.config'
-import userModel from '../models/user'
+import userModel from '../../models/system/user'
 
 export default {
     add: async (ctx, next) =>{
