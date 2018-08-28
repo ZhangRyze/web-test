@@ -53,7 +53,7 @@ export const update = (model, conditions, update, options) => {
 
 export const remove = (model, conditions) => {
     return new Promise((resolve, reject) => {
-        model.findByIdAndRemove(conditions, function (err, res) {
+        model.findByIdAndRemove(conditions, (err, res) => {
             if (err) {
                 console.error('Error: ' + JSON.stringify(err));
                 reject(err);
@@ -66,7 +66,7 @@ export const remove = (model, conditions) => {
                 }
                 resolve(res);
             }
-        });
+        })
     })
 }
 
@@ -79,27 +79,29 @@ export const remove = (model, conditions) => {
  * @param callback
  */
 export const find = (model, conditions, fields, options = {}) => {
-    var sort = options.sort == undefined ? {
-        _id: -1
-    } : options.sort;
+    var sort = options.sort == undefined ? { _id: -1 } : options.sort;
     delete options.sort;
+    var populate = options.populate == undefined ? "" : options.populate
+    delete options.populate
 
     return new Promise((resolve, reject) => {
-        model.find(conditions, fields, options, function (err, res) {
-            if (err) {
-                console.error('Error: ' + JSON.stringify(err));
-                reject(err);
-                return false;
-            } else {
-                if (res && res.length != 0) {
-                    console.log('find success!');
+        model.find(conditions, fields, options)
+            .sort(sort)
+            .populate(populate)
+            .exec((err, res) => {
+                if (err) {
+                    console.error('Error: ' + JSON.stringify(err));
+                    reject(err);
+                    return false;
                 } else {
-                    console.log('find fail:no this data!');
+                    if (res && res.length != 0) {
+                        console.log('find success!');
+                    } else {
+                        console.log('find fail:no this data!');
+                    }
+                    resolve(res)
                 }
-                resolve(res)
-            }
-        }).sort(sort);
-
+            })
     })
 }
 
@@ -112,26 +114,29 @@ export const find = (model, conditions, fields, options = {}) => {
  * @param callback
  */
 export const findById = (model, conditions, fields, options = {}) => {
-    var sort = options.sort == undefined ? {
-        _id: -1
-    } : options.sort;
+    var sort = options.sort == undefined ? { _id: -1 } : options.sort;
     delete options.sort;
+    var populate = options.populate == undefined ? "" : options.populate
+    delete options.populate
 
     return new Promise((resolve, reject) => {
-        model.findById(conditions, fields, options, function (err, res) {
-            if (err) {
-                console.error('Error: ' + JSON.stringify(err));
-                reject(err);
-                return false;
-            } else {
-                if (res && res.length != 0) {
-                    console.log('find success!');
+        model.findById(conditions, fields, options)
+            .sort(sort)
+            .populate(populate)
+            .exec((err, res) => {
+                if (err) {
+                    console.error('Error: ' + JSON.stringify(err));
+                    reject(err);
+                    return false;
                 } else {
-                    console.log('find fail:no this data!');
+                    if (res && res.length != 0) {
+                        console.log('find success!');
+                    } else {
+                        console.log('find fail:no this data!');
+                    }
+                    resolve(res)
                 }
-                resolve(res)
-            }
-        }).sort(sort);
+            })
     })
 }
 
@@ -145,38 +150,38 @@ export const findById = (model, conditions, fields, options = {}) => {
  * @param callback
  */
 export const findOne = (model, conditions, fields, options = {}) => {
-    var sort = options.sort == undefined ? {
-        _id: -1
-    } : options.sort;
+    var sort = options.sort == undefined ? { _id: -1 } : options.sort;
     delete options.sort;
+    var populate = options.populate == undefined ? "" : options.populate
+    delete options.populate
 
     return new Promise((resolve, reject) => {
-        model.findOne(conditions, fields, options, function (err, res) {
-            if (err) {
-                console.error('Error: ' + JSON.stringify(err));
-                reject(err);
-                return false;
-            } else {
-                if (res) {
-                    console.log('find success!');
+        model.findOne(conditions, fields, options)
+            .sort(sort)
+            .populate(populate)
+            .exec((err, res)=>{
+                if (err) {
+                    console.error('Error: ' + JSON.stringify(err));
+                    reject(err);
+                    return false;
                 } else {
-                    console.log('find fail:no this data!');
+                    if (res) {
+                        console.log('find success!');
+                    } else {
+                        console.log('find fail:no this data!');
+                    }
+                    resolve(res);
                 }
-                resolve(res);
-            }
-        }).sort(sort);
+            })
     })
 }
 
 
 export const findPage = async (model, conditions, fields, options = {}) => {
-    console.log(options.sort);
-    
-    var sort = options.sort == undefined ? {
-        _id: -1
-    } : options.sort;
-    delete options.sort;
-
+    var sort = options.sort == undefined ? { _id: -1 } : options.sort
+    delete options.sort
+    var populate = options.populate == undefined ? "" : options.populate
+    delete options.populate
     const getCount = () => {
         return new Promise((resolve, reject) => {
             model.find(conditions, fields).count({}, (err, res) => {
@@ -188,30 +193,31 @@ export const findPage = async (model, conditions, fields, options = {}) => {
             })
         })
     }
-
     const count = await getCount()
-
     return new Promise((resolve, reject) => {
-        model.find(conditions, fields, options, function (err, res) {
-            if (err) {
-                console.error('Error: ' + JSON.stringify(err));
-                reject(err);
-                return false;
-            } else {
-                if (res.length != 0) {
-                    console.log('find success!');
-                    resolve({
-                        list: res,
-                        total: count
-                    })
+        model.find(conditions, fields, options)
+            .sort(sort)
+            .populate(populate)
+            .exec((err, res) => {
+                if (err) {
+                    console.error('Error: ' + JSON.stringify(err));
+                    reject(err);
+                    return false;
                 } else {
-                    console.log('find fail:no this data!');
-                    resolve({
-                        list: res,
-                        total: count
-                    })
+                    if (res.length != 0) {
+                        console.log('find success!');
+                        resolve({
+                            list: res,
+                            total: count
+                        })
+                    } else {
+                        console.log('find fail:no this data!');
+                        resolve({
+                            list: res,
+                            total: count
+                        })
+                    }
                 }
-            }
-        }).sort(sort);
+            })
     })
 }

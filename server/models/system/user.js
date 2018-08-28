@@ -14,11 +14,16 @@ let userSchema = db.Schema({
         type: String,
         required: true
     },
-    contact: {
-        type: Number,
+    userType:{
+        type: db.Schema.Types.ObjectId,
+        ref: 'dictionary'   
     },
     contact: Number,
     remark: String,
+    state:{
+        type: Number,
+        default: 1
+    },
     createTime: {
         type: String,
         default: () => {

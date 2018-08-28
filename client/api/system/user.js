@@ -43,3 +43,11 @@ export const deleteUser = ({ id }) => {
     })
 }
 
+export const updateUser = ({ id, state}) => {
+    const data = { id, state }
+    return axios.post({
+        url: 'user/updateUser',
+        data
+    })
+}
+

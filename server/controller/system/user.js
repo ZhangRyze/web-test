@@ -2,8 +2,8 @@ import userModel from '../../models/system/user'
 
 export default {
     add: async (ctx, next) =>{
-        let paramsData = ctx.request.body;
         console.log('----------------添加用户 user/add-----------------------');
+        let paramsData = ctx.request.body;
         try {
             let data = await ctx.findOne(userModel, {
                 $or: [{
@@ -23,8 +23,8 @@ export default {
         }
     },
     update: async (ctx, next) =>{
-        let paramsData = ctx.request.body;
         console.log('----------------更新用户 user/update-----------------------');
+        let paramsData = ctx.request.body;
         try {
             let data = await ctx.findOne(userModel, {
                 $or: [{
@@ -45,6 +45,18 @@ export default {
             ctx.error(e)
         }
     },
+    updateUser: async(ctx, next) => {
+        console.log('----------------更新用户状态 user/updateUser-----------------------');
+        let { id, state} = ctx.request.body;
+        console.log(state);
+        
+        try {
+            let data = await ctx.update(userModel, { _id: id }, { state: state})
+            data ? ctx.success(data) : ctx.error(400, "用户不存在")
+        } catch (e) {
+            ctx.error(e)
+        }
+    },
     list: async (ctx, next) => {
         console.log('----------------获取用户信息列表接口 user/list-----------------------');
         let { userName, pageNo = 1, pageSize = 10 } = ctx.request.body;
@@ -54,7 +66,13 @@ export default {
                 $or: [
                     { userName: { $regex: reg } }
                 ]
-            }, { password: 0, __v: 0}, { limit: pageSize * 1, skip: (pageNo - 1) * pageSize });
+            }, 
+            { password: 0, __v: 0 },
+            { 
+                limit: pageSize * 1,
+                skip: (pageNo - 1) * pageSize ,
+                populate: { path: 'userType', select: { '__v': 0 }}
+            })
             ctx.success(data)
         } catch (e) {
             ctx.error(e)

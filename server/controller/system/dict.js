@@ -2,8 +2,8 @@ import dictModel from '../../models/system/dict'
 
 export default {
     add: async (ctx, next) => {
-        let paramsData = ctx.request.body;
         console.log('----------------添加字典 dict/add-----------------------');
+        let paramsData = ctx.request.body;
         try {
             let data = await ctx.findOne(dictModel, {
                 $or: [{
@@ -38,8 +38,8 @@ export default {
         }
     },
     update: async (ctx, next) => {
-        let paramsData = ctx.request.body;
         console.log('----------------更新字典 dict/update-----------------------');
+        let paramsData = ctx.request.body;
         try {
             let data = await ctx.findOne(dictModel, {
                 $or: [{
@@ -73,6 +73,16 @@ export default {
         try {
             let data = await ctx.remove(dictModel, { _id: id })
             data ? ctx.success(data) : ctx.error(400, "字典不存在")
+        } catch (e) {
+            ctx.error(e)
+        }
+    },
+    dictByCode:async(ctx, next) => {
+        console.log('----------------根据code获取字典列表 dict/dictByCode-----------------------');
+        let paramsData = ctx.request.body;
+        try {
+            let data = await ctx.find(dictModel, paramsData, { __v: 0 }, { sort: { sort_no: 1 } });
+            ctx.success(data)
         } catch (e) {
             ctx.error(e)
         }

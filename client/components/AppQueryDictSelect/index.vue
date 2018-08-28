@@ -4,13 +4,14 @@
         <div class="app-query-item-content">
             <el-select v-model="value" :placeholder="placeholder" @change="valueChange">
                 <el-option v-if="optionFirst" :label="optionFirst?optionFirst:'全部'" value=""></el-option>
-                <el-option v-for="item in options" :key="item.code" :label="item.name" :value="item.code"></el-option>
+                <el-option v-for="item in options" :key="item._id" :label="item.name" :value="item._id"></el-option>
             </el-select>
         </div>
     </div>
 </template>
 
 <script>
+import { dictList } from "@/api/system/dict"
 export default {
     name: 'AppQueryDictSelect',
     props: {
@@ -66,14 +67,8 @@ export default {
             })
         },
         queryDictList(){
-            var params = {
-                code: this.dictType
-            }
-            this.$http.get({
-                url: '/dictionary/seachDictionary',
-                params
-            }).then(res => {
-                this.options = res;
+            dictList({ code: this.dictType }).then(res => {
+                this.options = res.data
             })
         },
     }

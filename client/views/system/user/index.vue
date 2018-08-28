@@ -3,6 +3,7 @@
         <app-table-form @to-query="queryInfo" :total="total">
             <template slot="query-form">
                 <app-query-input label="用户姓名" property="userName" placeholder="请输入用户姓名"></app-query-input>
+                <app-query-dict-select dict-type="user_type" option-first="全部" label="用户类型" property="userType" placeholder="请选择用户类型"></app-query-dict-select>
             </template>
             <el-button slot="handle-button" type="success" @click="addUser">新增</el-button>
             <template slot="table-list">
@@ -11,11 +12,19 @@
                     <el-table-column type="index" width="50"></el-table-column>
                     <el-table-column prop="loginName" label="用户账户"></el-table-column>
                     <el-table-column prop="userName" label="用户姓名"></el-table-column>
+                    <el-table-column prop="userType.name" label="用户类型"></el-table-column>
+                    <el-table-column prop="state" label="用户类型">
+                        <template slot-scope="scope">
+                            <el-tag :type="scope.row.state ? 'success' : 'danger'">{{scope.row.state ? '启用' : '停用'}}</el-tag>
+                        </template>
+                    </el-table-column>
                     <el-table-column prop="createTime" label="创建时间"></el-table-column>
                     <el-table-column>
                         <template slot-scope="scope">
                             <el-button size='mini' @click="editUser(scope.row)">修改</el-button>
-                            <el-button size='mini' @click="delUser(scope.row)">删除</el-button>
+                            <el-button size='mini' v-if="scope.row.state === 0" type="success" @click="enableUser(scope.row)">启用</el-button>
+                            <el-button size='mini' v-if="scope.row.state === 1" type="warning" @click="disableUser(scope.row)">停用</el-button>
+                            <el-button size='mini' type="danger" @click="delUser(scope.row)">删除</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -30,7 +39,7 @@
     import userForm from "./userForm";
     import userRoleForm from "./userRoleForm";
     import userAuthForm from "./userAuthForm";
-    import { getUserList, deleteUser, getUserInfo } from "@/api/system/user"
+    import { getUserList, deleteUser, getUserInfo, updateUser } from "@/api/system/user"
 
     export default {
         name: "userManage",
@@ -98,6 +107,18 @@
             editUser: function (item) {
                 getUserInfo({id: item._id}).then(res => {
                     this.$refs.userDialog.open(res.data);
+                })
+            },
+            enableUser(item){
+                updateUser({id: item._id, state: 1}).then(res => {
+                    this.$message.success("启用成功")
+                    this.queryInfo(this.queryFilters)        
+                })
+            },
+            disableUser(item){
+                updateUser({id: item._id, state: 0}).then(res => {
+                    this.$message.success("停用成功")
+                    this.queryInfo(this.queryFilters)        
                 })
             },
             // 编辑用户角色

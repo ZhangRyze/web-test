@@ -44,6 +44,14 @@ export const deleteDict = ({ id }) => {
     })
 }
 
+export const dictList = ({ code }) => {
+    const data = { code }
+    return axios.post({
+        url: 'dict/dictByCode',
+        data
+    })
+}
+
 
 
 
