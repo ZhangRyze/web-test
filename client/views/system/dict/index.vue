@@ -3,7 +3,7 @@
 		<app-table-form @to-query="queryInfo" :total="total">
 			<template slot="query-form">
 				<app-query-input label="字典编号" property="code" placeholder="请输入字典编号"></app-query-input>
-				<app-query-input label="字典名称" property="name" placeholder="请输入字典名称"></app-query-input>
+				<app-query-input label="字典类型" property="codeName" placeholder="请输入字典名称"></app-query-input>
 			</template>
 			<el-button slot="handle-button" type="success" @click="addProject">新增</el-button>
 			<template slot="table-list">
@@ -11,75 +11,70 @@
 				<el-table :data="tableData" border max-height="350" style="width: 100%">
 					<el-table-column type="index" width="50"></el-table-column>
 					<el-table-column prop="code" label="字典编号"></el-table-column>
+					<el-table-column prop="codeName" label="字典类型"></el-table-column>
 					<el-table-column prop="name" label="字典名称"></el-table-column>
-				    <el-table-column fixed="right" label="操作">
+				    <el-table-column fixed="right" label="操作" width="250">
 					    <template slot-scope="scope">
 					        <el-button size='mini' @click="editProject(scope.row)">修改</el-button>
-					        <el-button size='mini' @click="checkProject(scope.row)">查看</el-button>
+					        <el-button size='mini' @click="addKeys(scope.row)">添加键值</el-button>
 					        <el-button size='mini' type="danger" @click="delProject(scope.row)">删除</el-button>
 					    </template>
 				    </el-table-column>
 				</el-table>
 			</template>
 		</app-table-form>
-		<dict-form :dialog-title="dialogTitle" :active-item="activeItem" :dialog-visible="dialogVisible"></dict-form>
-		<dict-table-form :dialog-title="dialogTableTitle" :active-item="activeItem" :dialog-visible="dialogTableVisible"></dict-table-form>
+		<dict-form ref="dictDialog"></dict-form>
 	</div>
 </template>
 <script>
 import dictForm from './dictForm'
-import dictTableForm from './dictTableForm'
-import { getDictList } from "@/api/system/dict"
+import { getDictList, deleteDict, getDictInfo } from "@/api/system/dict"
 
 
 export default {
 	name: 'dictManage',
 	components:{
-		dictForm,
-		dictTableForm
+		dictForm
 	},
 	data() {
 		return {
 			total: 0,
 			queryFilters:{},
 			activeItem: null,
-			dialogTitle:"新增字典",
-			dialogVisible:false,
-			dialogTableTitle:"字典集合",
-			dialogTableVisible:false,
 			tableData:[],
 		}
 	},
 	methods: {
 		addProject(){
-			this.dialogTitle = "新增字典";
-			this.dialogVisible = true;
+			this.$refs.dictDialog.open()
+		},
+		addKeys(item){
+			this.$refs.dictDialog.open(false, item)
 		},
 		delProject(row){
-			var params = row.id
-			this.$http.delete({
-				name:'字典',
-				url: '/dictionary/deleteDictionary',
-				params
-			}).then(res => {
-				this.queryInfo();
-            })
+			var _me = this
+			_me.$confirm('此操作将永久删除该字典, 是否继续?', '提示').then(() => {
+				deleteDict({id: item._id}).then(res => {
+					_me.$message.success('删除成功')
+					_me.queryInfo(_me.queryFilters)        
+				})
+			})
 		},
 		editProject(row){
-			this.dialogTitle = "字典修改";
-			this.activeItem = row;
-			this.dialogVisible = true;
+			getDictInfo({id: row._id}).then(res => {
+				this.$refs.dictDialog.open(res.data);
+			})
 		},
 		checkProject(row){
-			this.dialogTableTitle = "字典集合";
-			this.activeItem = row;
-			this.dialogTableVisible = true;
+			getDictInfo({id: row._id}).then(res => {
+				this.$refs.dictTableDialog.open(res.data);
+			})
 		},
 		queryInfo(params){
-			if(!params) params = this.queryFilters;
+            params = params || this.queryFilters
 			getDictList(params).then(res => {
-				console.log(res);
-				
+				this.total = res.data.total
+				this.tableData = res.data.list
 			})
 		}
 	}

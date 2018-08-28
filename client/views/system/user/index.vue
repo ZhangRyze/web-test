@@ -83,14 +83,9 @@
             // 删除用户
             delUser: function (item) {
                 var _me = this
-                _me.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(() => {
+                _me.$confirm('此操作将永久删除该用户, 是否继续?', '提示').then(() => {
                     deleteUser({id: item._id}).then(res => {
                         _me.$message.success('删除成功')
-                        debugger
                         _me.queryInfo(_me.queryFilters)        
                     })
                 })

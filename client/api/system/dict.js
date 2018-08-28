@@ -14,10 +14,11 @@ export const handleDict = (data) => {
         })
     }
 }
-export const getDictList = ({ code, name, pageNo, pageSize }) => {
+export const getDictList = ({ code, name, codeName, pageNo, pageSize }) => {
     const data = {
         code,
         name,
+        codeName,
         pageNo,
         pageSize
     }
@@ -26,6 +27,23 @@ export const getDictList = ({ code, name, pageNo, pageSize }) => {
         data
     })
 }
+
+export const getDictInfo = ({ id }) => {
+    const data = { id }
+    return axios.post({
+        url: 'dict/info',
+        data
+    })
+}
+
+export const deleteDict = ({ id }) => {
+    const data = { id }
+    return axios.post({
+        url: 'dict/del',
+        data
+    })
+}
+
 
 
 

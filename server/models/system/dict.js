@@ -1,11 +1,11 @@
 var format = require('date-format');
 import db from '../../mongodb'
 let userSchema = db.Schema({
-    parent: {
-        type: String,
-        default: null,
-    },
     code: {
+        type: String,
+        required: true
+    },
+    codeName:{
         type: String,
         required: true
     },
@@ -17,6 +17,7 @@ let userSchema = db.Schema({
         type: Number,
         required: true
     },
+    remark: String,
     createTime: {
         type: String,
         default: () => {

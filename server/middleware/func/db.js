@@ -170,6 +170,8 @@ export const findOne = (model, conditions, fields, options = {}) => {
 
 
 export const findPage = async (model, conditions, fields, options = {}) => {
+    console.log(options.sort);
+    
     var sort = options.sort == undefined ? {
         _id: -1
     } : options.sort;
@@ -182,7 +184,6 @@ export const findPage = async (model, conditions, fields, options = {}) => {
                     console.log('查询长度错误')
                     return reject(err);
                 }
-
                 resolve(res)
             })
         })
@@ -211,7 +212,6 @@ export const findPage = async (model, conditions, fields, options = {}) => {
                     })
                 }
             }
-        })
-
+        }).sort(sort);
     })
 }
