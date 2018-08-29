@@ -51,7 +51,7 @@ export default {
 		addKeys(item){
 			this.$refs.dictDialog.open(false, item)
 		},
-		delProject(row){
+		delProject(item){
 			var _me = this
 			_me.$confirm('此操作将永久删除该字典, 是否继续?', '提示').then(() => {
 				deleteDict({id: item._id}).then(res => {
@@ -60,13 +60,13 @@ export default {
 				})
 			})
 		},
-		editProject(row){
-			getDictInfo({id: row._id}).then(res => {
+		editProject(item){
+			getDictInfo({id: item._id}).then(res => {
 				this.$refs.dictDialog.open(res.data);
 			})
 		},
-		checkProject(row){
-			getDictInfo({id: row._id}).then(res => {
+		checkProject(itemrow){
+			getDictInfo({id: item._id}).then(res => {
 				this.$refs.dictTableDialog.open(res.data);
 			})
 		},

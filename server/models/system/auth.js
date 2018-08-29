@@ -1,10 +1,29 @@
 var format = require('date-format');
 import db from '../../mongodb'
 let userSchema = db.Schema({
+    parent: {
+        type: String,
+        default: null
+    },
     name: {
         type: String,
         required: true
     },
+    auth: {
+        type: String,
+        required: true
+    },
+    authIcon: String,
+    sort_no: {
+        type: Number,
+        required: true
+    },
+    state:{
+        type: Number,
+        default: 1
+    },
+    symbol: String,
+    remark: String,
     createTime: {
         type: String,
         default: () => {

@@ -23,6 +23,8 @@ export default app => {
         //     return
         // }
     })
+    // 方法封装
+    app.use(Func())
 
     // 日志中间件
     app.use(Log())
@@ -32,8 +34,6 @@ export default app => {
     // 数据返回的封装
     app.use(Send())
 
-    // 方法封装
-    app.use(Func())
 
     //post请求中间件
     app.use(bodyParser())

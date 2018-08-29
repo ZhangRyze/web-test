@@ -10,6 +10,11 @@ import dict_controller from "../controller/system/dict"
 for (const func in dict_controller) {
     router.post(`/dict/${func}`, dict_controller[func])
 }
+// =========================[-auth-接口模块-start]==================================================
+import auth_controller from "../controller/system/auth"
+for (const func in auth_controller) {
+    router.post(`/auth/${func}`, auth_controller[func])
+}
 
 
 export default app => {

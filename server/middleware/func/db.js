@@ -83,7 +83,6 @@ export const find = (model, conditions, fields, options = {}) => {
     delete options.sort;
     var populate = options.populate == undefined ? "" : options.populate
     delete options.populate
-
     return new Promise((resolve, reject) => {
         model.find(conditions, fields, options)
             .sort(sort)

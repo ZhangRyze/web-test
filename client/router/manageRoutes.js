@@ -10,5 +10,10 @@ export default [
         tag: '字典管理',
         component: () => import('@/views/system/dict'),
     },
-
+    {
+        path: '/system/auth',
+        name: 'auth-system',
+        tag: '权限管理',
+        component: () => import('@/views/system/auth'),
+    },
 ]

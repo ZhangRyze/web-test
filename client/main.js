@@ -9,6 +9,7 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 // 全局注册通用组件
 import '@/components/init'
+import tools from '@/util/tools'
 
 Vue.use(ElementUI, {
   size: 'small',
@@ -16,6 +17,7 @@ Vue.use(ElementUI, {
 })
 
 Vue.config.productionTip = false
+Vue.prototype.util = tools
 
 new Vue({
   router,
