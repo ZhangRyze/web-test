@@ -1,6 +1,6 @@
 var format = require('date-format');
 import db from '../../mongodb'
-let userSchema = db.Schema({
+let authSchema = db.Schema({
     parent: {
         type: String,
         default: null
@@ -32,4 +32,4 @@ let userSchema = db.Schema({
         }
     },
 })
-export default db.model('auth', userSchema);
+export default db.model('auth', authSchema);

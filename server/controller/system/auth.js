@@ -15,8 +15,7 @@ export default {
         console.log('----------------权限列表 auth/list-----------------------')
         try {
             let data = await ctx.find(authModel, {}, { __v: 0 }, { sort: { sort_no:1} })
-            let list = ctx.convertTree(data.list, 'parent', '_id')
-            data.list = list
+            data = ctx.convertTree(data, 'parent', '_id')
             ctx.success(data)
         } catch (e) {
             ctx.error(e)

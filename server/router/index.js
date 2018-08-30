@@ -15,6 +15,11 @@ import auth_controller from "../controller/system/auth"
 for (const func in auth_controller) {
     router.post(`/auth/${func}`, auth_controller[func])
 }
+// =========================[-auth-接口模块-start]==================================================
+import role_controller from "../controller/system/role"
+for (const func in role_controller) {
+    router.post(`/role/${func}`, role_controller[func])
+}
 
 
 export default app => {

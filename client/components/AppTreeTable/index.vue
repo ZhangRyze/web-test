@@ -12,7 +12,7 @@
 		</el-table-column>
 		<el-table-column v-else v-for="(column, index) in columns" :key="column.value" :label="column.text" :width="column.width">
 			<template slot-scope="scope">
-				<span v-if="index === 0" v-for="space in scope.row._level" class="ms-tree-space" :key="space"></span>
+				<span class="ms-tree-space" :style="{width:scope.row._level*18 + 'px'}"></span>
 				<span class="tree-ctrl" v-if="iconShow(index, scope.row)" @click="toggleExpanded(scope.row)">
 					<i v-if="!scope.row._expanded" class="el-icon-caret-right"></i>
 					<i v-else class="el-icon-caret-bottom"></i>

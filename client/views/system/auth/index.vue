@@ -5,9 +5,8 @@
 			<el-button slot="handle-button" type="success" @click="addProject">新增</el-button>
 			<template slot="table-list">
 				<div type="title"><i class="el-icon-tickets"></i>权限列表</div>
-    			<app-tree-table :data="tableData" border>
+    			<app-tree-table :data="tableData" :columns="columns" border>
 			    	<el-table-column prop="sort_no" label="权限排序" width="180"></el-table-column>
-			    	<el-table-column prop="name" label="权限名称"></el-table-column>
 			    	<el-table-column prop="auth" label="权限链接"></el-table-column>
 			    	<el-table-column prop="symbol" label="权限标识"></el-table-column>
 			    	<el-table-column prop="state" label="可见">
@@ -15,7 +14,7 @@
 							<el-tag :type="scope.row.state?'':'info'">{{ scope.row.state ? '显示' : '隐藏' }}</el-tag>
 			        	</template>
 					</el-table-column>
-			      	<el-table-column label="操作">
+			      	<el-table-column label="操作" width="235">
 			        	<template slot-scope="scope">
 					        <el-button size='mini' @click="editProject(scope.row)">修改</el-button>
 					        <el-button size='mini' type="success" @click="addProject(scope.row)">新增下级</el-button>
@@ -39,6 +38,11 @@ export default {
 	},
 	data() {
 		return {
+			columns:[{
+				width: 200,
+				value: "name",
+				text: "权限名称"
+			}],
 			total: 0,
 			queryFilters:{},
 			tableData:[],
@@ -67,10 +71,7 @@ export default {
 		queryInfo(params){
 			params = params || this.queryFilters;
 			getAuthList(params).then(res => {
-				this.total = res.data.total
-				console.log(res.data.list);
-				
-				// this.tableData = res.data.list
+				this.tableData = res.data
 			})
 		}
 	}

@@ -6,7 +6,7 @@ export const get_client_ip = ctx => {
 }
 
 export const convertTree = (list, pKey = 'pId', cKey = 'id') => {
-    list = Object.assign({}, list)
+    list = Object.assign([], list)
     let rows = JSON.parse(JSON.stringify(list))
     
     function exists(rows, parentId) {
@@ -16,6 +16,7 @@ export const convertTree = (list, pKey = 'pId', cKey = 'id') => {
         return false;
     }
     let nodes = [];
+
     // get the top level nodes
     for (let i = 0; i < rows.length; i++) {
         let row = rows[i];
@@ -23,8 +24,8 @@ export const convertTree = (list, pKey = 'pId', cKey = 'id') => {
             nodes.push(row);
         }
     }
-    
     let toDo = Object.assign([], nodes);
+    
     while (toDo.length) {
         let node = toDo.shift(); // the parent node
         // get the children nodes

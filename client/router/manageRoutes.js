@@ -16,4 +16,10 @@ export default [
         tag: '权限管理',
         component: () => import('@/views/system/auth'),
     },
+    {
+        path: '/system/role',
+        name: 'role-system',
+        tag: '角色管理',
+        component: () => import('@/views/system/role'),
+    },
 ]

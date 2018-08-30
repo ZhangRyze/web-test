@@ -28,7 +28,6 @@ export default {
             let _codeName = new RegExp(codeName, 'i')
             let data = await ctx.findPage(dictModel, {
                 $or: [
-                    { code: { $regex: _code }, codeName: { $regex: _codeName } },
                     { code: { $regex: _code }, codeName: { $regex: _codeName } }
                 ]
             }, { __v: 0 }, { limit: pageSize * 1, skip: (pageNo - 1) * pageSize, sort:{code:1}});

@@ -1,11 +1,7 @@
 var format = require('date-format');
 import db from '../../mongodb'
-let dictSchema = db.Schema({
+let roleSchema = db.Schema({
     code: {
-        type: String,
-        required: true
-    },
-    codeName:{
         type: String,
         required: true
     },
@@ -13,11 +9,10 @@ let dictSchema = db.Schema({
         type: String,
         required: true
     },
-    sort_no: {
-        type: Number,
-        required: true
-    },
-    remark: String,
+    auths: [{
+        type: db.Schema.Types.ObjectId,
+        ref: 'auth'
+    }],
     createTime: {
         type: String,
         default: () => {
@@ -26,4 +21,4 @@ let dictSchema = db.Schema({
         }
     },
 })
-export default db.model('dictionary', dictSchema);
+export default db.model('role', roleSchema);
