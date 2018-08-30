@@ -5,32 +5,33 @@ export const get_client_ip = ctx => {
         (ctx.request.connection.socket && ctx.request.connection.socket.remoteAddress) || null
 }
 
-export const convertTree = (rows, pKey = 'pId', cKey = 'id') => {
+export const convertTree = (list, pKey = 'pId', cKey = 'id') => {
+    list = Object.assign({}, list)
+    let rows = JSON.parse(JSON.stringify(list))
+    
     function exists(rows, parentId) {
-        for (var i = 0; i < rows.length; i++) {
+        for (let i = 0; i < rows.length; i++) {
             if (rows[i][cKey] == parentId) return true;
         }
         return false;
     }
-    var nodes = [];
+    let nodes = [];
     // get the top level nodes
-    for (var i = 0; i < rows.length; i++) {
-        var row = rows[i];
+    for (let i = 0; i < rows.length; i++) {
+        let row = rows[i];
         if (!exists(rows, row[pKey])) {
             nodes.push(row);
         }
     }
-    var toDo = [];
-    for (var i = 0; i < nodes.length; i++) {
-        toDo.push(nodes[i]);
-    }
+    
+    let toDo = Object.assign([], nodes);
     while (toDo.length) {
-        var node = toDo.shift(); // the parent node
+        let node = toDo.shift(); // the parent node
         // get the children nodes
-        for (var i = 0; i < rows.length; i++) {
-            var row = rows[i];
+        for (let i = 0; i < rows.length; i++) {
+            let row = rows[i];
             if (row[pKey] == node[cKey]) {
-                var child = row;
+                let child = row;
                 if (node.children) {
                     node.children.push(child);
                 } else {
@@ -40,5 +41,7 @@ export const convertTree = (rows, pKey = 'pId', cKey = 'id') => {
             }
         }
     }
+    console.log(nodes);
+    
     return nodes;
 }

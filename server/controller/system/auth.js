@@ -13,12 +13,10 @@ export default {
     },
     list: async (ctx, next) => {
         console.log('----------------权限列表 auth/list-----------------------')
-        let { pageNo = 1, pageSize = 10 } = ctx.request.body
         try {
-            let data = await ctx.findPage(authModel, {}, { __v: 0 }, { limit: pageSize * 1, skip: (pageNo - 1) * pageSize, sort: { sort_no:1} })
-            console.log(data);
-            data.list = ctx.convertTree(data.list, 'parent', '_id')
-            console.log(data);
+            let data = await ctx.find(authModel, {}, { __v: 0 }, { sort: { sort_no:1} })
+            let list = ctx.convertTree(data.list, 'parent', '_id')
+            data.list = list
             ctx.success(data)
         } catch (e) {
             ctx.error(e)

@@ -1,6 +1,7 @@
 <template>
 	<div class="main-content">
 		<app-table-form @to-query="queryInfo" :pagination="false" no-query>
+			<el-button slot="handle-button" @click="queryInfo">查询</el-button>
 			<el-button slot="handle-button" type="success" @click="addProject">新增</el-button>
 			<template slot="table-list">
 				<div type="title"><i class="el-icon-tickets"></i>权限列表</div>
@@ -67,7 +68,9 @@ export default {
 			params = params || this.queryFilters;
 			getAuthList(params).then(res => {
 				this.total = res.data.total
-				this.tableData = this.util.convertTree(res.data.list, 'parent', '_id')
+				console.log(res.data.list);
+				
+				// this.tableData = res.data.list
 			})
 		}
 	}
