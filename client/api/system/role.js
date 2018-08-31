@@ -14,6 +14,7 @@ export const handleRole = (data) => {
         })
     }
 }
+
 export const getRoleList = ({ code, name, pageNo, pageSize }) => {
     const data = {
         code,
@@ -24,6 +25,12 @@ export const getRoleList = ({ code, name, pageNo, pageSize }) => {
     return axios.post({
         url: 'role/list',
         data
+    })
+}
+
+export const getAuthList = () => {
+    return axios.post({
+        url: 'auth/list'
     })
 }
 

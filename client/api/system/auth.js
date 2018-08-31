@@ -14,14 +14,9 @@ export const handleAuth = (data) => {
         })
     }
 }
-export const getAuthList = ({ pageNo, pageSize }) => {
-    const data = {
-        pageNo,
-        pageSize
-    }
+export const getAuthList = () => {
     return axios.post({
-        url: 'auth/list',
-        data
+        url: 'auth/list'
     })
 }
 

@@ -14,7 +14,7 @@
 							<el-tag :type="scope.row.state?'':'info'">{{ scope.row.state ? '显示' : '隐藏' }}</el-tag>
 			        	</template>
 					</el-table-column>
-			      	<el-table-column label="操作" width="235">
+			      	<el-table-column label="操作" width="250">
 			        	<template slot-scope="scope">
 					        <el-button size='mini' @click="editProject(scope.row)">修改</el-button>
 					        <el-button size='mini' type="success" @click="addProject(scope.row)">新增下级</el-button>
