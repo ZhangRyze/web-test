@@ -8,7 +8,7 @@
 				<el-input v-model="formData.name" placeholder="请输入角色名称"></el-input>
 			</el-form-item>
 			<el-form-item label="角色权限">
-				<el-tree ref="tree" :data="treeData" show-checkbox node-key="_id" default-expand-all :default-checked-keys="[5]" :props="defaultProps"></el-tree>
+				<el-tree ref="tree" :data="treeData" show-checkbox node-key="_id" default-expand-all :default-checked-keys="formData.auths" :props="defaultProps"></el-tree>
 			</el-form-item>
 		</el-form>
 		<span slot="footer" class="dialog-footer">
