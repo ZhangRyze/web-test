@@ -6,16 +6,17 @@
 </template>
 
 <script>
-import { dictList } from "@/api/system/dict"
+import HttpRequest from "@/util/axios";
+const axios = new HttpRequest()
 
 export default {
-    name: 'AppDictSelect',
+    name: 'AppSelect',
     props: {
         placeholder: {
             type: String,
             default: '请选择'
         },
-        dictType: {
+        selectUrl: {
             type: String,
             default: null
         },
@@ -31,13 +32,16 @@ export default {
         }
     },
     activated(){
-        if(this.dictType){
-            this.queryDictList();
+        if(this.selectUrl){
+            this.queryList();
         }
     },
     methods:{
-        queryDictList(){
-            dictList({ code: this.dictType }).then(res => {
+        queryList(){
+            axios.post({
+                url: selectUrl,
+                data
+            }).then(res => {
                 this.options = res.data
             })
         },

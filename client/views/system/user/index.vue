@@ -3,7 +3,7 @@
         <app-table-form @to-query="queryInfo" :total="total">
             <template slot="query-form">
                 <app-query-input label="用户姓名" property="userName" placeholder="请输入用户姓名"></app-query-input>
-                <app-query-dict-select dict-type="user_type" option-first="全部" label="用户类型" property="userType" placeholder="请选择用户类型"></app-query-dict-select>
+                <App-query-select label="用户类型" select-url="role/all" option-first="全部" property="userType" placeholder="请输入用户类型"></app-query-select>
             </template>
             <el-button slot="handle-button" type="success" @click="addUser">新增</el-button>
             <template slot="table-list">
@@ -40,6 +40,7 @@
     import userRoleForm from "./userRoleForm";
     import userAuthForm from "./userAuthForm";
     import { getUserList, deleteUser, getUserInfo, updateUser } from "@/api/system/user"
+    import { getAllRole } from "@/api/system/role"
 
     export default {
         name: "userManage",
@@ -53,6 +54,7 @@
                 total: 0,
                 queryFilters: {},
                 tableData: [],
+                userType:[]
             };
         },
         methods: {

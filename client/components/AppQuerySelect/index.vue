@@ -11,25 +11,19 @@
 </template>
 
 <script>
-import { dictList } from "@/api/system/dict"
+import HttpRequest from "@/util/axios";
+const axios = new HttpRequest()
+
 export default {
-    name: 'AppQueryDictSelect',
+    name: 'AppQuerySelect',
     props: {
-        dictType: {
+        selectUrl: {
             type: String,
             default: null
         },
         optionFirst: {
             type: String,
             default: null
-        },
-        operator: {
-            type: String,
-            default: 'like'
-        },
-        paramType: {
-            type: String,
-            default: 'Object'
         },
         property: {
             type: String,
@@ -46,14 +40,14 @@ export default {
     },
     data(){
         return {
-            componentName:'app-query-dict-select',
+            componentName:'app-query-select',
             value: null,
             options: []
         }
     },
     activated(){
-        if(this.dictType){
-            this.queryDictList();
+        if(this.selectUrl){
+            this.queryList();
         }
     },
     mounted(){
@@ -66,8 +60,10 @@ export default {
                 value: val ? val : ""
             })
         },
-        queryDictList(){
-            dictList({ code: this.dictType }).then(res => {
+        queryList(){
+            axios.post({
+                url: this.selectUrl
+            }).then(res => {
                 this.options = res.data
             })
         },

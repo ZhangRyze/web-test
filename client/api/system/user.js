@@ -15,9 +15,10 @@ export const handleUser = (data) => {
     }
 }
 
-export const getUserList = ({ userName, pageNo, pageSize }) => {
+export const getUserList = ({ userName, userType, pageNo, pageSize }) => {
     const data = {
         userName,
+        userType,
         pageNo,
         pageSize
     }

@@ -59,13 +59,13 @@ export default {
     },
     list: async (ctx, next) => {
         console.log('----------------获取用户信息列表接口 user/list-----------------------');
-        let { userName, pageNo = 1, pageSize = 10 } = ctx.request.body;
+        let { userName, userType, pageNo = 1, pageSize = 10 } = ctx.request.body;
+
         try {
-            let reg = new RegExp(userName, 'i')
+            let _userName = new RegExp(userName, 'i')
+            let _param = userType ? { userName: { $regex: _userName }, userType: userType } : { userName: { $regex: _userName } }
             let data = await ctx.findPage(userModel, {
-                $or: [
-                    { userName: { $regex: reg } }
-                ]
+                $or: [  _param ]
             }, 
             { password: 0, __v: 0 },
             { 

@@ -7,6 +7,8 @@ import AppTableForm from '@/components/AppTableForm'
 import AppQueryInput from '@/components/AppQueryInput'
 import AppQueryDictSelect from '@/components/AppQueryDictSelect'
 import AppTreeTable from '@/components/AppTreeTable'
+import AppQuerySelect from '@/components/AppQuerySelect'
+import AppSelect from '@/components/AppSelect'
 
 // 组件库
 let Components = [
@@ -15,7 +17,9 @@ let Components = [
     AppTableForm,
     AppQueryInput,
     AppQueryDictSelect,
-    AppTreeTable
+    AppTreeTable,
+    AppQuerySelect,
+    AppSelect
 ]
 
 // 注册全局组件
