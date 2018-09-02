@@ -18,7 +18,8 @@
 	</el-dialog>
 </template>
 <script>
-import { handleRole, getAuthList } from "@/api/system/role"
+import { handleRole } from "@/api/system/role"
+import { getAuthList } from "@/api/system/auth"
 export default {
 	name: 'roleForm',
 	data(){

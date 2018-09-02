@@ -8,7 +8,9 @@
                 <el-input v-model="formData.userName" placeholder="请输入用户姓名"></el-input>
             </el-form-item>
             <el-form-item label="用户类型">
-                <app-dict-select dict-type="user_type" v-model="formData.userType" placeholder="请选择用户类型"></app-dict-select>
+                <el-select v-model="formData.userType" placeholder="请选择">
+                    <el-option v-for="item in userType" :key="item._id" :label="item.name" :value="item._id"></el-option>
+                </el-select>
             </el-form-item>
             <el-form-item label="用户密码" v-if="!activeItem">
                 <el-input type="password" v-model="formData.password" placeholder="请输入用户密码"></el-input>
@@ -29,6 +31,7 @@
 
 <script>
     import { handleUser } from "@/api/system/user"
+    import { getAllRole } from "@/api/system/role"
     export default {
         name: "userForm",
         data() {
@@ -36,6 +39,7 @@
                 activeItem: null,
                 dialogVisible:false,
                 dialogTitle:"新增用户",
+                userType:[],
                 formData: {}
             }
         },
@@ -43,6 +47,9 @@
             open: function (item) {
                 this.activeItem = item || null;
                 this.dialogVisible = true;
+                getAllRole().then(res => {
+                    this.userType = res.data
+                })
             }, 
             close: function () {
                 this.formData = {};

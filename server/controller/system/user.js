@@ -71,7 +71,7 @@ export default {
             { 
                 limit: pageSize * 1,
                 skip: (pageNo - 1) * pageSize ,
-                populate: { path: 'userType', select: { '__v': 0 }}
+                populate: { path: 'userType', select: {auths:0, '__v': 0 }}
             })
             ctx.success(data)
         } catch (e) {

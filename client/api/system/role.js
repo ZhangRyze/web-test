@@ -28,12 +28,6 @@ export const getRoleList = ({ code, name, pageNo, pageSize }) => {
     })
 }
 
-export const getAuthList = () => {
-    return axios.post({
-        url: 'auth/list'
-    })
-}
-
 export const getRoleInfo = ({ id }) => {
     const data = { id }
     return axios.post({
@@ -50,6 +44,8 @@ export const deleteRole = ({ id }) => {
     })
 }
 
-
-
-
+export const getAllRole = () => {
+    return axios.post({
+        url: 'role/all'
+    })
+}

@@ -32,13 +32,22 @@ export default {
                 $or: [
                     { code: { $regex: _code }, name: { $regex: _name } },
                 ]
-            }, 
-            { __v: 0 }, 
-            { 
-                limit: pageSize * 1,
-                skip: (pageNo - 1) * pageSize,
-                sort: { code: 1 }
-            });
+            },
+                { __v: 0 },
+                {
+                    limit: pageSize * 1,
+                    skip: (pageNo - 1) * pageSize,
+                    sort: { code: 1 }
+                });
+            ctx.success(data)
+        } catch (e) {
+            ctx.error(e)
+        }
+    },
+    all: async (ctx, next) => {
+        console.log('----------------获取全部角色列表接口 role/all-----------------------');
+        try {
+            let data = await ctx.find(roleModel, null, {auths: 0, __v:0});
             ctx.success(data)
         } catch (e) {
             ctx.error(e)

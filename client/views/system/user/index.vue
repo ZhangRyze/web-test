@@ -19,7 +19,7 @@
                         </template>
                     </el-table-column>
                     <el-table-column prop="createTime" label="创建时间"></el-table-column>
-                    <el-table-column>
+                    <el-table-column width="250">
                         <template slot-scope="scope">
                             <el-button size='mini' @click="editUser(scope.row)">修改</el-button>
                             <el-button size='mini' v-if="scope.row.state === 0" type="success" @click="enableUser(scope.row)">启用</el-button>

@@ -16,7 +16,7 @@ let userSchema = db.Schema({
     },
     userType:{
         type: db.Schema.Types.ObjectId,
-        ref: 'dictionary'   
+        ref: 'role'   
     },
     contact: Number,
     remark: String,
