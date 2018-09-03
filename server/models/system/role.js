@@ -13,6 +13,10 @@ let roleSchema = db.Schema({
         type: db.Schema.Types.ObjectId,
         ref: 'auth'
     }],
+    authsed:{
+        type: Array,
+        required: true
+    },
     createTime: {
         type: String,
         default: () => {

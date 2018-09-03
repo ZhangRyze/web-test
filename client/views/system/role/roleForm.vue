@@ -8,7 +8,7 @@
 				<el-input v-model="formData.name" placeholder="请输入角色名称"></el-input>
 			</el-form-item>
 			<el-form-item label="角色权限">
-				<el-tree ref="tree" :data="treeData" show-checkbox node-key="_id" default-expand-all :default-checked-keys="formData.auths" :props="defaultProps"></el-tree>
+				<el-tree ref="tree" :data="treeData" show-checkbox node-key="_id" default-expand-all :default-checked-keys="formData.authsed" :props="defaultProps"></el-tree>
 			</el-form-item>
 		</el-form>
 		<span slot="footer" class="dialog-footer">
@@ -51,8 +51,11 @@ export default {
 			this.formData = this.activeItem ? this.activeItem : {}
 		},
 		saveForm(){
-			var params = this.formData
-			params['auths'] = this.$refs.tree.getCheckedKeys()
+			let params = this.formData
+			let _Auths = this.$refs.tree.getCheckedKeys()
+			let _HalfAuths = this.$refs.tree.getHalfCheckedKeys()
+			params['auths'] = [..._Auths, ..._HalfAuths]
+			params['authsed'] = _Auths
 			handleRole(params).then(res => {
 				this.close()
 				this.$parent.queryInfo()

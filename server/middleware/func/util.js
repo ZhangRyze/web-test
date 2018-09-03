@@ -5,13 +5,13 @@ export const get_client_ip = ctx => {
         (ctx.request.connection.socket && ctx.request.connection.socket.remoteAddress) || null
 }
 
-export const convertTree = (list, pKey = 'pId', cKey = 'id') => {
+export const convertTree = (list, p = 'pId', c = 'id') => {
     list = Object.assign([], list)
     let rows = JSON.parse(JSON.stringify(list))
     
     function exists(rows, parentId) {
         for (let i = 0; i < rows.length; i++) {
-            if (rows[i][cKey] == parentId) return true;
+            if (rows[i][c] == parentId) return true;
         }
         return false;
     }
@@ -20,7 +20,8 @@ export const convertTree = (list, pKey = 'pId', cKey = 'id') => {
     // get the top level nodes
     for (let i = 0; i < rows.length; i++) {
         let row = rows[i];
-        if (!exists(rows, row[pKey])) {
+        if (!exists(rows, row[p])) {
+            row.chooseIds = row[c];
             nodes.push(row);
         }
     }
@@ -31,18 +32,16 @@ export const convertTree = (list, pKey = 'pId', cKey = 'id') => {
         // get the children nodes
         for (let i = 0; i < rows.length; i++) {
             let row = rows[i];
-            if (row[pKey] == node[cKey]) {
-                let child = row;
+            if (row[p] == node[c]) {
+                row.chooseIds = node.chooseIds ? (node.chooseIds + ',' + row[c] ) : row[c] 
                 if (node.children) {
-                    node.children.push(child);
+                    node.children.push(row);
                 } else {
-                    node.children = [child];
+                    node.children = [row];
                 }
-                toDo.push(child);
+                toDo.push(row);
             }
         }
     }
-    console.log(nodes);
-    
     return nodes;
 }
