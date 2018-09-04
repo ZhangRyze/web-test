@@ -23,7 +23,7 @@ class httpRequest {
         // 请求拦截器
         instance.interceptors.request.use(config => {
             // if (!config.url.includes('user')){
-            //     config.headers['x-access-token'] = Cookies.get(TOKEN_KEY)
+            //     config.headers['x-access-token'] = Cookies.get(serverConf.tokenKey)
             // }
             return config
         }, err => {
@@ -41,7 +41,7 @@ class httpRequest {
             if (err.response){
                 let { status, data } = err.response;
                 if(status === 401){
-                    Cookies.remove(TOKEN_KEY)
+                    Cookies.remove(serverConf.tokenKey)
                     Message.error('未登录，或登录失效，请登录')
                 }else{
                     Message.error(data.msg)

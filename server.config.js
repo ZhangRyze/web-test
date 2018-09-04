@@ -1,9 +1,9 @@
 import path from 'path'
 const auth = {
-    admin_secret: 'admin-token',
+    secretKey: '123456789',
     tokenKey: 'Token-Auth',
     whiteList: ['login', 'client_api'],
-    blackList: ['admin_api']
+    blackList: ['login']
 }
 
 const log = {

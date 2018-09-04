@@ -3,7 +3,7 @@
         <el-form :model="loginForm" :rules="loginRules" ref="loginForm" label-width="0px">
             <div class="form-title">登录系统</div>
             <el-form-item prop="name">
-                <el-input v-model="loginForm.name" type="text"></el-input>
+                <el-input v-model="loginForm.loginName" type="text"></el-input>
             </el-form-item>
             <el-form-item prop="password">
                 <el-input v-model="loginForm.password" type="password"></el-input>
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import { login } from '@/api/system/common'
 export default {
     data() {
         return {
@@ -25,7 +26,7 @@ export default {
                 captcha: ''
             },
             loginRules: {
-                name: [
+                loginName: [
                     {required: true, message: '请输入用户名', trigger: 'blur'}
                 ],
                 password :[
@@ -36,9 +37,16 @@ export default {
     },
     methods: {
         submitForm(){
+            var _me = this
             this.$refs.loginForm.validate((valid) => {
                 if (valid) {
-                    this.$router.push('system')
+                    login({
+                        loginName: _me.loginForm.loginName,
+                        password: _me.loginForm.password
+                    }).then(res => {
+                        console.log(res);
+                        this.$router.push('system')
+                    })
                 }
             });
         }

@@ -20,6 +20,11 @@ import role_controller from "../controller/system/role"
 for (const func in role_controller) {
     router.post(`/role/${func}`, role_controller[func])
 }
+// =========================[-common-接口模块-start]==================================================
+import common_controller from "../controller/system/common"
+for (const func in common_controller) {
+    router.post(`/common/${func}`, common_controller[func])
+}
 
 
 export default app => {

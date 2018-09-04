@@ -5,6 +5,7 @@ import bodyParser from 'koa-bodyparser'
 // import staticFiles from 'koa-static'
 import handler from './handler'
 import Send from './send'
+import Auth from './auth'
 import Log from './log'
 import Func from './func'
 
@@ -28,12 +29,15 @@ export default app => {
 
     // 日志中间件
     app.use(Log())
+    
     // 数据error处理
     app.use(handler())
 
     // 数据返回的封装
     app.use(Send())
 
+    //权限中间件
+    app.use(Auth())
 
     //post请求中间件
     app.use(bodyParser())
