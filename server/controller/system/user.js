@@ -71,7 +71,7 @@ export default {
             { 
                 limit: pageSize * 1,
                 skip: (pageNo - 1) * pageSize ,
-                populate: { path: 'userType', select: {auths:0, '__v': 0 }}
+                populate: { path: 'userType',select: { auths: 0, authsed:0, '__v': 0 }}
             })
             ctx.success(data)
         } catch (e) {
@@ -94,6 +94,21 @@ export default {
         try {
             let data = await ctx.remove(userModel, { _id: id })
             data ? ctx.success(data) : ctx.error(400, "用户不存在")
+        } catch (e) {
+            ctx.error(e)
+        }
+    },
+    auths: async(ctx, next) => {
+        console.log('----------------获取用户权限 user/auths-----------------------');
+        // let { id } = ctx.request.body
+        try {
+            let data = await ctx.findById(userModel, "5b84feaf0306a8796e2ac591", 
+            { password: 0, __v: 0 },
+            {
+                populate: { path: 'userType', select: { authsed: 0, '__v': 0 }, populate: { path: 'auths' }}
+            })
+            let _auths = data ? ctx.convertTree(data.userType.auths, 'parent', '_id') : []
+            data ? ctx.success(_auths) : ctx.error(400, "用户不存在")
         } catch (e) {
             ctx.error(e)
         }
