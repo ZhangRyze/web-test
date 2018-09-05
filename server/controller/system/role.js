@@ -47,7 +47,7 @@ export default {
     all: async (ctx, next) => {
         console.log('----------------获取全部角色列表接口 role/all-----------------------');
         try {
-            let data = await ctx.find(roleModel, null, {auths: 0, __v:0});
+            let data = await ctx.find(roleModel, null, { auths: 0, authsed:0, __v:0});
             ctx.success(data)
         } catch (e) {
             ctx.error(e)

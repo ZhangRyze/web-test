@@ -59,8 +59,8 @@ class httpRequest {
             timeout: 6000,
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
-                'X-URL-PATH': location.pathname
-            }
+            },
+            withCredentials: true
         }
         return Axios.create(conf)
     }

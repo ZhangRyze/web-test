@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
+import router from './router/permissioon'
+// import { router } from './router'
 import store from './store'
 // 初始化基础样式
 import './assets/css/reset.css';

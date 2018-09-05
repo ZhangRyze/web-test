@@ -2,7 +2,7 @@ import path from 'path'
 const auth = {
     secretKey: '123456789',
     tokenKey: 'Token-Auth',
-    whiteList: ['login', 'client_api'],
+    whiteList: ['/login'],
     blackList: ['login']
 }
 

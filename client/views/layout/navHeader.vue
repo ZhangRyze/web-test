@@ -5,7 +5,7 @@
                 <slot name="logo"></slot>
             </div>
             <div class="header-handle">
-            	<div>admin</div>
+            	<div>{{userName}}</div>
             	<div>
                     <router-link :to="{name: 'home'}">退出</router-link>
                 </div>
@@ -15,16 +15,19 @@
 </template>
 <script>
 import homeRoutes from '@/router/homeRoutes';
+import store from '@/store'
 
 export default {
     name: 'homeHeader',
     data() {
         return {
-            menuList: []
+            menuList: [],
+            userName: null
         }
     },
     created(){
         this.menuList = homeRoutes;
+        this.userName = store.state.user.userName
     },
     methods:{
 

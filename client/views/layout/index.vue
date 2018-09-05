@@ -14,7 +14,6 @@
 <script>
 import navHeader from './navHeader'
 import navAside from './navAside'
-import { getUserAuths } from '@/api/system/common'
 
 export default {
     name: 'manageLayout',
@@ -24,9 +23,6 @@ export default {
         }
     },
     created(){
-        getUserAuths().then(res => {
-            console.log(res);
-        })
     },
     methods:{
         loadingState(val){

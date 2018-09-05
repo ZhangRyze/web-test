@@ -11,7 +11,10 @@ import Func from './func'
 
 export default app => {
     // 跨域
-    app.use(cors());
+    app.use(cors({
+        origin: 'http://localhost:9000',
+        credentials: true,
+    }));
     // 缓存拦截器
     app.use(async (ctx, next) => { 
         if (ctx.url == '/favicon.ico') return

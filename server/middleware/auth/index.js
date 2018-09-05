@@ -5,8 +5,6 @@ export default () => {
     return async (ctx, next) => {
         if (!conf.auth.whiteList.some(v => ctx.path.indexOf(v) >= 0 )) {
             let token = ctx.cookies.get(conf.auth.tokenKey);
-            console.log(token);
-            
             try {
                 jwt.verify(token, conf.auth.secretKey);
             } catch (e) {

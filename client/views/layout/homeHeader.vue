@@ -11,6 +11,9 @@
             </div>
             <div class="header-handle">
             	<div>
+                    <router-link :to="{name: 'system'}">控制台</router-link>
+                </div>
+            	<div>
                     <router-link :to="{name: 'login'}">登录</router-link>
                 </div>
             	<div>

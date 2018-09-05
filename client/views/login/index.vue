@@ -44,8 +44,7 @@ export default {
                         loginName: _me.loginForm.loginName,
                         password: _me.loginForm.password
                     }).then(res => {
-                        console.log(res);
-                        this.$router.push('system')
+                        this.$router.push('/')
                     })
                 }
             });

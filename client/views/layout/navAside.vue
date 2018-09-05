@@ -1,13 +1,13 @@
 <template>
     <div class="nav-aside">
         <el-menu router ref="navbar" :default-active="defActive" menu-trigger="click" unique-opened>
-            <nav-bar-item v-for="(item, n) in menuList" :item="item" :navIndex="String(n)" :key="n"></nav-bar-item>
+            <nav-bar-item v-for="(item, n) in menuList" :key="n" :item="item" :navIndex="item.path"></nav-bar-item>
         </el-menu>
     </div>
 </template>
 <script>
 import NavBarItem from './navBarItem';
-import manageRoutes from '@/router/manageRoutes';
+import store from '@/store'
 
 export default {
     name: 'homeHeader',
@@ -21,8 +21,8 @@ export default {
             return this.$route.path
         }
     },
-    created() {
-        this.menuList = manageRoutes;
+    created(){
+        this.menuList = store.state.user.auths;
     },
     methods: {
 

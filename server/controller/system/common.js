@@ -21,7 +21,8 @@ export default {
                 username: data.userName,
             }
             let token = jwt.sign(payload, conf.auth.secretKey, { expiresIn: '24h' })  //token签名 有效期为24小时
-            ctx.cookies.set(conf.auth.tokenKey, token, {httpOnly: false});
+            
+            ctx.cookies.set(conf.auth.tokenKey, token, { httpOnly: false });
             ctx.success({ id: data._id});
         } catch (e) {
             if (e === '暂无数据') {
@@ -33,8 +34,6 @@ export default {
     auths: async (ctx, next) => {
         console.log('----------------获取用户权限 common/auths-----------------------');
         let token = ctx.cookies.get(conf.auth.tokenKey);
-        
-        // let { id } = ctx.request.body
         try {
             let _userInfo = jwt.decode(token, conf.auth.secretKey);
             let data = await ctx.findById(userModel, _userInfo.userId,
@@ -43,7 +42,11 @@ export default {
                     populate: { path: 'userType', select: { authsed: 0, '__v': 0 }, populate: { path: 'auths' } }
                 })
             let _auths = data ? ctx.convertTree(data.userType.auths, 'parent', '_id') : []
-            data ? ctx.success(_auths) : ctx.error(400, "用户不存在")
+            data ? ctx.success({
+                userName: data.userName,
+                userType: data.userType.code,
+                auths: _auths
+            }) : ctx.error(400, "用户不存在")
         } catch (e) {
             ctx.error(e)
         }

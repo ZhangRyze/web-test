@@ -3,7 +3,7 @@
         <app-table-form @to-query="queryInfo" :total="total">
             <template slot="query-form">
                 <app-query-input label="用户姓名" property="userName" placeholder="请输入用户姓名"></app-query-input>
-                <App-query-select label="用户类型" select-url="role/all" option-first="全部" property="userType" placeholder="请输入用户类型"></app-query-select>
+                <app-query-select label="用户类型" select-url="role/all" option-first="全部" property="userType" placeholder="请输入用户类型"></app-query-select>
             </template>
             <el-button slot="handle-button" type="success" @click="addUser">新增</el-button>
             <template slot="table-list">
