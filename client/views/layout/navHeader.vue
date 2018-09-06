@@ -1,7 +1,7 @@
 <template>
     <div class="home-header">
         <div>
-            <div class="logo">
+            <div class="logo" @click="toIndex">
                 <slot name="logo"></slot>
             </div>
             <div class="header-handle">
@@ -30,7 +30,9 @@ export default {
         this.userName = store.state.user.userName
     },
     methods:{
-
+        toIndex(){
+            this.$router.push('/')
+        }
     }
 }
 </script>

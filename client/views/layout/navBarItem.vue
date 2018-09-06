@@ -3,7 +3,7 @@
         <!-- 创建父级菜单 -->
         <template slot="title">
         	<i v-if="item.icon" class="item.icon"></i>
-        	{{ item.tag }}
+        	{{ item.meta.tag }}
         </template>
         <!-- 创建子菜单 -->
         <nav-bar-item v-for="(subItem, i) in item.children" :key="i" :navIndex="navIndex +'/'+ subItem.path" :item="subItem" >
@@ -12,7 +12,7 @@
 
     <el-menu-item v-else :index="navIndex" :route="{path: item.path}">
     	<i class="el-icon-location"></i>
-    	{{ item.tag }}
+    	{{ item.meta.tag }}
     </el-menu-item>
 </template>
 

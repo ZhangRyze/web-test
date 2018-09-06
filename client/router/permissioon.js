@@ -26,7 +26,7 @@ router.beforeEach((to, from, next) => {
     }
 })
 router.afterEach((to, from) => {
-    document.title = to.name
+    document.title = to.meta.tag
 })
 
 export default router

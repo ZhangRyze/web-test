@@ -14,14 +14,17 @@ export const constantRouterMap = [
     },{
         path: '/404',
         name: 'error-404',
+        meta: { tag: "404" },
         component: _import_('error/404')
     },{
         path: '/',
+        meta: { tag: "首页" },
         component: _import_(''),
         children: homeRoutes
     },{
         path: '/login',
         name: 'login',
+        meta: { tag:"登录平台" },
         component: _import_('login'),
     }
 ]
@@ -29,30 +32,38 @@ export const asyncRouterMap = [{
     path: '/system',
     redirect: '/system/user',
     name: 'system',
-    tag: '系统设置',
+    meta: { tag: '系统设置' },
     component: _import_('layout'),
     children: [
         {
             path: 'user',
             name: 'user-system',
-            tag: '用户管理',
+            meta:{
+                tag: '用户管理',
+            },
             component: _import_('system/user'),
         }, {
             path: 'dict',
             name: 'dict-system',
-            tag: '字典管理',
+            meta: {
+                tag: '字典管理',
+            },
             component: _import_('system/dict'),
         },
         {
             path: 'auth',
             name: 'auth-system',
-            tag: '权限管理',
+            meta: {
+                tag: '权限管理',
+            },
             component: _import_('system/auth'),
         },
         {
             path: 'role',
             name: 'role-system',
-            tag: '角色管理',
+            meta: {
+                tag: '角色管理',
+            },
             component: _import_('system/role'),
         }
     ]
