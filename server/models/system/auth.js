@@ -5,6 +5,10 @@ let authSchema = db.Schema({
         type: String,
         default: null
     },
+    parentIds:{
+        type: String,
+        default: null
+    },
     name: {
         type: String,
         required: true

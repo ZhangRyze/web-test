@@ -5,6 +5,9 @@ export default {
         console.log('----------------添加权限 auth/add-----------------------')
         let paramsData = ctx.request.body
         try {
+            if (paramsData.parent){
+                paramsData.parentIds = paramsData.parentIds + ',' + paramsData.parent
+            }
             let { _id } = await ctx.add(authModel, paramsData)
             ctx.success({ id: _id })
         } catch (e) {
