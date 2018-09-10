@@ -50,10 +50,33 @@ export const update = (model, conditions, update, options) => {
  * @param model
  * @param conditions
  */
-
-export const remove = (model, conditions) => {
+export const removeById = (model, conditions) => {
     return new Promise((resolve, reject) => {
         model.findByIdAndRemove(conditions, (err, res) => {
+            if (err) {
+                console.error('Error: ' + JSON.stringify(err));
+                reject(err);
+                return false;
+            } else {
+                if (res && res.n != 0) {
+                    console.log('remove success!');
+                } else {
+                    console.log('remove fail:no this data!');
+                }
+                resolve(res);
+            }
+        })
+    })
+}
+
+/**
+ * 公共remove方法
+ * @param model
+ * @param conditions
+ */
+export const remove = (model, conditions) => {
+    return new Promise((resolve, reject) => {
+        model.deleteMany(conditions, (err, res) => {
             if (err) {
                 console.error('Error: ' + JSON.stringify(err));
                 reject(err);

@@ -5,8 +5,9 @@ export default {
         console.log('----------------添加权限 auth/add-----------------------')
         let paramsData = ctx.request.body
         try {
-            if (paramsData.parent){
-                paramsData.parentIds = paramsData.parentIds + ',' + paramsData.parent
+            let _parentData = await ctx.findById(authModel, paramsData.parent)
+            if (_parentData){
+                paramsData.parentIds = _parentData.parentIds + ',' + paramsData.parent
             }
             let { _id } = await ctx.add(authModel, paramsData)
             ctx.success({ id: _id })
@@ -39,7 +40,7 @@ export default {
         console.log('----------------获取权限信息接口 auth/info-----------------------');
         let { id } = ctx.request.body;
         try {
-            let data = await ctx.findById(authModel, id, { __v: 0 });
+            let data = await ctx.findById(authModel, id, { __v: 0 })
             data ? ctx.success(data) : ctx.error(400, "权限不存在")
         } catch (e) {
             ctx.error(e)
@@ -48,8 +49,11 @@ export default {
     del: async (ctx, next) => {
         console.log('----------------删除权限 auth/del-----------------------');
         let { id } = ctx.request.body
+        let _reg = new RegExp(id, 'i')
         try {
-            let data = await ctx.remove(authModel, { _id: id })
+            let data = await ctx.remove(authModel, {
+                $or: [{ _id: id }, { parentIds: { $regex: _reg }}]
+            })
             data ? ctx.success(data) : ctx.error(400, "权限不存在")
         } catch (e) {
             ctx.error(e)

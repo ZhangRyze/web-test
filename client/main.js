@@ -1,10 +1,10 @@
 import Vue from 'vue'
-import App from './App.vue'
-import router from './router/permissioon'
+import App from '@/App.vue'
+import router from '@/router/permissioon'
 // import { router } from './router'
-import store from './store'
+import store from '@/store'
 // 初始化基础样式
-import './assets/css/reset.css';
+import '@/assets/css/reset.css';
 // 配置iview框架
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';

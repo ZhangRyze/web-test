@@ -94,7 +94,7 @@ export default {
         console.log('----------------删除用户 user/del-----------------------');
         let { id } = ctx.request.body
         try {
-            let data = await ctx.remove(userModel, { _id: id })
+            let data = await ctx.removeById(userModel, { _id: id })
             data ? ctx.success(data) : ctx.error(400, "用户不存在")
         } catch (e) {
             ctx.error(e)

@@ -3,11 +3,11 @@ import db from '../../mongodb'
 let authSchema = db.Schema({
     parent: {
         type: String,
-        default: null
+        default: '0'
     },
     parentIds:{
         type: String,
-        default: null
+        default: '0'
     },
     name: {
         type: String,

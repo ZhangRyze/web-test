@@ -70,7 +70,7 @@ export default {
         console.log('----------------删除字典 dict/del-----------------------');
         let { id } = ctx.request.body
         try {
-            let data = await ctx.remove(dictModel, { _id: id })
+            let data = await ctx.removeById(dictModel, { _id: id })
             data ? ctx.success(data) : ctx.error(400, "字典不存在")
         } catch (e) {
             ctx.error(e)

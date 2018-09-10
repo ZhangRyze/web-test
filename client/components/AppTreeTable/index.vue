@@ -72,7 +72,8 @@ export default {
 	},
 	methods: {
 		showRow: function(row) {
-			const show = (row.row.parent ? (row.row.parent._expanded && row.row.parent._show) : true)
+			
+			const show = (row.row.parent !== '0' && row.row.parent) ? (row.row.parent._expanded && row.row.parent._show) : true
 			row.row._show = show
 			return show ? 'animation:treeTableShow 1s;-webkit-animation:treeTableShow 1s;' : 'display:none;'
 		},

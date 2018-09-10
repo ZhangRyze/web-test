@@ -90,7 +90,7 @@ export default {
         console.log('----------------删除角色 role/del-----------------------');
         let { id } = ctx.request.body
         try {
-            let data = await ctx.remove(roleModel, { _id: id })
+            let data = await ctx.removeById(roleModel, { _id: id })
             data ? ctx.success(data) : ctx.error(400, "角色不存在")
         } catch (e) {
             ctx.error(e)
