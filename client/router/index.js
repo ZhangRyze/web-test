@@ -65,6 +65,14 @@ export const asyncRouterMap = [{
                 tag: '角色管理',
             },
             component: _import_('system/role'),
+        },
+        {
+            path: 'banner',
+            name: 'banner-system',
+            meta: {
+                tag: 'banner管理',
+            },
+            component: _import_('system/banner'),
         }
     ]
 }]
