@@ -73,6 +73,14 @@ export const asyncRouterMap = [{
                 tag: 'banner管理',
             },
             component: _import_('system/banner'),
+        },
+        {
+            path: 'files',
+            name: 'files-system',
+            meta: {
+                tag: '文件管理',
+            },
+            component: _import_('system/files'),
         }
     ]
 }]

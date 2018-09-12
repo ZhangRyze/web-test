@@ -35,6 +35,11 @@ import banner_controller from "../controller/system/banner"
 for (const func in banner_controller) {
     router.post(`/banner/${func}`, banner_controller[func])
 }
+// =========================[-banner-upload-接口模块-start]==================================================
+import files_controller from "../controller/system/files"
+for (const func in files_controller) {
+    router.post(`/files/${func}`, files_controller[func])
+}
 
 export default app => {
     app.use(router.routes(), router.allowedMethods());

@@ -1,4 +1,5 @@
 import multer from 'koa-multer'
+import fs from 'fs'
 
 export const uploadFile = (_ctx, opts) => {
     let storage = multer.diskStorage({
@@ -18,3 +19,17 @@ export const uploadFile = (_ctx, opts) => {
     })
 }
 
+export const pathList = (path) => {
+    let _path = path ? path : 'resource'
+    return new Promise((resolve, reject) => {
+        fs.readdir(_path, (err, files) => {
+            if (err) {
+                console.error('Error: ' + JSON.stringify(err));
+                reject(err);
+                return false;
+            }
+            console.log('find success!')
+            resolve(files);
+        })
+    })
+}
