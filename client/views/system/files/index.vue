@@ -1,29 +1,48 @@
 <template>
 	<div class="main-content">
-        <div>
-            <el-button type="success">新建文件夹</el-button>
+        <div class="app-query-form">
+            <el-button type="success" @click="addProject">新建文件夹</el-button>
         </div>
         <div>
-            <div v-for='path in paths'>{{path}}</div>
+            <el-menu style="width:200px;">
+                <el-menu-item v-for="(path, index) in paths" :key="index" index="path">{{path}}</el-menu-item>
+            </el-menu>
         </div>
+        <file-form ref="fileDialog"></file-form>
 	</div>
 </template>
 <script>
-import { getPath } from '@/api/system/files'
+import fileForm from './fileForm'
+import { getPath, getFiles } from '@/api/system/files'
 export default {
 	name: 'filesManager',
+	components:{
+		fileForm
+	},
 	data() {
 		return {
             paths:[]
       	}
     },
     activated(){
-        getPath().then( res=>{
-            this.paths = res.data
-        })
+        this.queryInfo()
     },
 	methods: {
-        
+		addProject(){
+			this.$refs.fileDialog.open()
+		},
+        queryInfo(){
+            getPath().then( res=>{
+                this.paths = res.data
+                getFiles({'name': 'banners'}).then(_res => {
+                    console.log(_res);
+                })
+            })
+        }
 	}
 }
 </script>
+<style>
+
+</style>
+

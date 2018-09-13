@@ -1,6 +1,6 @@
 <template>
 	<el-dialog width='30%' :title="dialogTitle" :visible.sync="dialogVisible" @open="dialogOpen" @close="close">
-		<el-form :model="formData">
+		<el-form :model="formData" label-width="100px">
 			<el-form-item label="字典编码">
 				<el-input v-model="formData.code" placeholder="请输入字典编码"></el-input>
 			</el-form-item>
