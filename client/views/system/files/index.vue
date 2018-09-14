@@ -7,6 +7,11 @@
             <el-menu style="width:200px;">
                 <el-menu-item v-for="(path, index) in paths" :key="index" index="path">{{path}}</el-menu-item>
             </el-menu>
+            <div class="files-box">
+                <div v-for="(file, index) in files" :key="index">
+                    <img :src="baseUrl + file.path">
+                </div>
+            </div>
         </div>
         <file-form ref="fileDialog"></file-form>
 	</div>
@@ -21,7 +26,9 @@ export default {
 	},
 	data() {
 		return {
-            paths:[]
+            baseUrl:'http://localhost:3000/',
+            paths:[],
+            files:[]
       	}
     },
     activated(){
@@ -35,7 +42,7 @@ export default {
             getPath().then( res=>{
                 this.paths = res.data
                 getFiles({'name': 'banners'}).then(_res => {
-                    console.log(_res);
+                    this.files = _res.data
                 })
             })
         }

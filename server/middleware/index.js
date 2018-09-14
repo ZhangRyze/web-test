@@ -2,7 +2,6 @@ import path from 'path'
 /*跨域*/
 import cors from 'koa-cors'
 import bodyParser from 'koa-bodyparser'
-// import staticFiles from 'koa-static'
 import handler from './handler'
 import Send from './send'
 import Auth from './auth'
@@ -15,6 +14,8 @@ export default app => {
         origin: 'http://localhost:9000',
         credentials: true,
     }));
+
+
     // 缓存拦截器
     app.use(async (ctx, next) => { 
         if (ctx.url == '/favicon.ico') return

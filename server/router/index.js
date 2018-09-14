@@ -41,6 +41,7 @@ for (const func in files_controller) {
     router.post(`/files/${func}`, files_controller[func])
 }
 
+
 export default app => {
     app.use(router.routes(), router.allowedMethods());
 }

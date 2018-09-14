@@ -1,8 +1,8 @@
 import multer from 'koa-multer'
 import fs from 'fs'
 
-const readFileList = async (path, filesList) => {
-    var files = await fs.readdir(path);
+const readFileList = (path, filesList) => {
+    var files = fs.readdirSync(path);
     files.forEach(function (itm, index) {
         var stat = fs.statSync(path + itm);
         if (stat.isDirectory()) {
@@ -10,7 +10,7 @@ const readFileList = async (path, filesList) => {
             readFileList(path + itm + "/", filesList)
         } else {
             var obj = {};//定义一个对象存放文件的路径和名字
-            obj.path = path;//路径
+            obj.path = path + itm;//路径
             obj.filename = itm//名字
             filesList.push(obj);
         }
@@ -101,7 +101,7 @@ export const removePath = (name) => {
 
 export const getFiles = (name) => {
     if (!name) return false
-    let _path = 'resource/' + name
+    let _path = 'resource/' + name + '/'
     let filesList = [];
     readFileList(_path, filesList);
     return filesList;
